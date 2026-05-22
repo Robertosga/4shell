@@ -99,11 +99,33 @@
     @media (max-width: 768px) {
       header h1 { font-size: 2.3rem; }
     }
+    header {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .logo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Controla o tamanho da logo para não quebrar o layout */
+        .logo-sistema {
+            max-height: 50px; /* Ajuste a altura máxima como preferir */
+            width: auto;
+            display: block;
+        }
   </style>
 </head>
 <body>
   <header>
-    <h1><img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema">Shell - Sistemas para Vendas e Gestão</a></h1>
+    <div class="logo-container">
+
+    </div><img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema"></div>
+    <h1>Sistemas para Vendas e Gestão</h1>
     <p>Transforme seu negócio com uma solução de gestão completa, desenvolvida para simplificar processos, automatizar vendas e entregar resultados reais.</p>
     <a class="button" href="#" onclick="rotaApp(event)">Assinante</a>
   </header>
