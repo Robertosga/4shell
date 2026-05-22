@@ -14,26 +14,39 @@
     header {
       padding: 40px 24px;
       text-align: center;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .logo-container {
+      max-width: 1120px;
+      margin: 0 auto 20px auto;
+    }
+    .logo-sistema {
+      max-height: 120px;
+      width: auto;
+      display: block;
+      margin: 0 auto;
     }
     header h1 {
       margin: 0;
-      font-size: 3rem;
+      font-size: 2.5rem;
+      color: #fff;
     }
     header p {
-      margin: 16px auto 0;
+      margin: 16px auto 24px;
       max-width: 720px;
       font-size: 1.05rem;
       line-height: 1.6;
+      color: #94a3b8;
     }
     .container {
       max-width: 1120px;
       margin: 0 auto;
       padding: 40px 24px;
     }
-    .features,
-    .pricing {
+    .features {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
     .feature-card,
@@ -48,6 +61,7 @@
     .plan-card h3 {
       margin-top: 0;
       font-size: 1.45rem;
+      color: #fff;
     }
     .feature-card p,
     .plan-card p {
@@ -57,7 +71,7 @@
     }
     .plan-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
       margin-top: 24px;
     }
@@ -68,81 +82,85 @@
     }
     .price {
       font-size: 2.5rem;
+      font-weight: bold;
       margin: 18px 0;
       color: #38bdf8;
+    }
+    .price small {
+      font-size: 1rem;
+      color: #94a3b8;
+      font-weight: normal;
     }
     .plan-card ul {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 20px 0;
       color: #cbd5e1;
     }
     .plan-card ul li {
       margin: 12px 0;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .button {
       display: inline-block;
-      margin-top: 24px;
       padding: 14px 26px;
       border-radius: 999px;
       text-decoration: none;
       color: #0f172a;
       background: #38bdf8;
       font-weight: 700;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .button:hover {
+      background: #0ea5e9;
+    }
+    .button-outline {
+      background: transparent;
+      color: #38bdf8;
+      border: 2px solid #38bdf8;
+    }
+    .button-outline:hover {
+      background: rgba(56, 189, 248, 0.1);
     }
     footer {
       text-align: center;
-      padding: 24px;
+      padding: 40px 24px;
       color: #94a3b8;
       font-size: 0.95rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.1);
     }
     @media (max-width: 768px) {
-      header h1 { font-size: 2.3rem; }
+      header h1 { font-size: 2rem; }
     }
-    header {
-            width: 100%;
-            background-color: #ffffff;
-            padding: 10px 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-        }
-
-        .logo-container {
-            max-width: 3000px;
-            margin: 0 auto;
-        }
-
-        /* Controla o tamanho da logo para não quebrar o layout */
-        .logo-sistema {
-            max-height: 200px; /* Ajuste a altura máxima como preferir */
-            width: auto;
-            display: block;
-            margin: 0 auto; /* Centraliza a logo horizontalmente */
-        }
   </style>
 </head>
 <body>
+
   <header>
     <div class="logo-container">
-
-    <img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema"></div>
+      <img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema">
+    </div>
     <h1>Sistemas para Vendas e Gestão</h1>
     <p>Transforme seu negócio com uma solução de gestão completa, desenvolvida para simplificar processos, automatizar vendas e entregar resultados reais.</p>
-    <a class="button" href="#" onclick="rotaApp(event)">Assinante</a>
+    <a class="button button-outline" href="#" onclick="rotaApp(event)">Área do Assinante</a>
   </header>
 
   <section class="container">
     <div class="features">
       <div class="feature-card">
-        <h3>Automação de vendas</h3>
+        <h3>Automação de Vendas</h3>
         <p>Controle pedidos, clientes e estoque em um único sistema intuitivo. Ganhe tempo e reduza erros manuais.</p>
       </div>
       <div class="feature-card">
-        <h3>Relatórios inteligentes</h3>
+        <h3>Relatórios Inteligentes</h3>
         <p>Relatórios claros e poderosos para acompanhar faturamento, desempenho e fluxo de caixa em tempo real.</p>
       </div>
       <div class="feature-card">
-        <h3>Suporte e implantação</h3>
+        <h3>Suporte e Implantação</h3>
         <p>Instalação rápida com suporte dedicado para que sua empresa comece a operar imediatamente com confiança.</p>
       </div>
     </div>
@@ -151,30 +169,48 @@
   <section class="container">
     <h2>Planos 4Shell</h2>
     <p>Escolha o plano mais adequado ao tamanho e necessidade do seu negócio.</p>
+    
     <div class="plan-grid">
+      <!-- PLANO ESSENCIAL -->
       <div class="plan-card">
-        <h3>Plano 200</h3>
-        <div class="price">R$ 200</div>
-        <p>Ideal para empresas que estão começando e precisam de um sistema eficiente com custo acessível.</p>
-        <ul>
-          <li>Gestão de vendas</li>
-          <li>Controle básico de estoque</li>
-          <li>Cadastro de clientes</li>
-          <li>Relatórios mensais</li>
-        </ul>
-        <a class="button" href="#contato">Quero o Plano 200</a>
+        <div>
+          <h3>Gestão Essencial</h3>
+          <div class="price">R$ 200<small>/mês</small></div>
+          <p>Ideal para a operação do dia a dia, controle de vendas, prestação de serviços e fluxo de caixa.</p>
+          <ul>
+            <li>✅ Cadastros Estruturais (Básicos)</li>
+            <li>✅ Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
+            <li>✅ PDV Frente de Caixa</li>
+            <li>✅ Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
+            <li>✅ Fluxo de Caixa (Financeiro Básico)</li>
+            <li>❌ Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
+            <li>❌ Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
+            <li>❌ Controladoria e Finanças (Financeiro Av.)</li>
+            <li>❌ Auditoria e Logs de Segurança</li>
+          </ul>
+        </div>
+        <a class="button" href="#contato">Quero o Plano Essencial</a>
       </div>
-      <div class="plan-card">
-        <h3>Plano 280</h3>
-        <div class="price">R$ 280</div>
-        <p>Para empresas que buscam recursos avançados, maior controle e insights estratégicos.</p>
-        <ul>
-          <li>Tudo do plano 200</li>
-          <li>Relatórios avançados</li>
-          <li>Gerenciamento de múltiplas lojas</li>
-          <li>Suporte prioritário</li>
-        </ul>
-        <a class="button" href="#contato">Quero o Plano 280</a>
+
+      <!-- PLANO AVANÇADO -->
+      <div class="plan-card" style="border-color: #38bdf8;">
+        <div>
+          <h3>Gestão Avançada</h3>
+          <div class="price">R$ 280<small>/mês</small></div>
+          <p>Para empresas que buscam automação fiscal, inteligência de compras e total segurança de auditoria.</p>
+          <ul>
+            <li>✅ Cadastros Estruturais (Básicos)</li>
+            <li>✅ Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
+            <li>✅ PDV Frente de Caixa</li>
+            <li>✅ Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
+            <li>✅ Fluxo de Caixa (Financeiro Básico)</li>
+            <li>✅ Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
+            <li>✅ Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
+            <li>✅ Controladoria e Finanças (Financeiro Avançado)</li>
+            <li>✅ Auditoria e Logs de Segurança (Vendas, Finanças e Prod.)</li>
+          </ul>
+        </div>
+        <a class="button" href="#contato" style="background: #38bdf8;">Quero o Plano Avançado</a>
       </div>
     </div>
   </section>
@@ -188,23 +224,15 @@
   </section>
 
   <footer>
-    <p>4Shell - Soluções em Sistemas de Gestão | Venda de sistemas com valor de R$200 e R$280</p>
+    <p>4Shell - Soluções em Sistemas de Gestão | Todos os direitos reservados.</p>
   </footer>
-  <!-- Adicione o Script antes de fechar o body -->
+
   <script>
-    // Função que simula a rota "app" e abre a página externa
     function rotaApp(event) {
-      // Impede o comportamento padrão do link, se necessário
       event.preventDefault(); 
-      
-      const urlExterna = "https://4shellsistemas.verapp.com.br/"; // URL do site externo
-      // Abre na mesma aba:
+      const urlExterna = "https://4shellsistemas.verapp.com.br/";
       window.location.href = urlExterna;
-      
-      // CASO PREFIRA ABRIR EM UMA NOVA ABA, comente a linha de cima e use esta:
-      // window.open(urlExterna, '_blank');
     }
   </script>
-</body>
 </body>
 </html>
