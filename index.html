@@ -5,151 +5,354 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>4Shell - Sistemas de Gestão</title>
   <style>
+    :root {
+      --bg-principal: #0b1329;
+      --bg-card: rgba(30, 41, 59, 0.4);
+      --border-card: rgba(148, 163, 184, 0.1);
+      --cor-primaria: #38bdf8;
+      --cor-primaria-hover: #0ea5e9;
+      --texto-claro: #f8fafc;
+      --texto-mutado: #94a3b8;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a;
-      color: #f8fafc;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-principal);
+      color: var(--texto-claro);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
+
+    /* Fundo dinâmico com gradiente sutil */
+    .bg-glow {
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(11, 19, 41, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
     header {
-      padding: 40px 24px;
+      padding: 80px 24px 60px;
       text-align: center;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      position: relative;
     }
+
     .logo-container {
       max-width: 1120px;
-      margin: 0 auto 20px auto;
+      margin: 0 auto 28px auto;
     }
+
     .logo-sistema {
-      max-height: 170px;
+      max-height: 140px;
       width: auto;
       display: block;
       margin: 0 auto;
+      filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.2));
+      transition: transform 0.3s ease;
     }
+
+    .logo-sistema:hover {
+      transform: scale(1.03);
+    }
+
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
-      color: #fff;
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+
     header p {
-      margin: 16px auto 24px;
-      max-width: 720px;
-      font-size: 1.05rem;
+      margin: 18px auto 32px;
+      max-width: 640px;
+      font-size: 1.15rem;
       line-height: 1.6;
-      color: #94a3b8;
+      color: var(--texto-mutado);
     }
+
     .container {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 40px 24px;
     }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle-section {
+      text-align: center;
+      color: var(--texto-mutado);
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+    }
+
+    /* Efeito de revelar ao rolar (Scroll Reveal) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Grid de Recursos */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      gap: 28px;
     }
-    .feature-card,
-    .plan-card {
-      background: #111827;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+
+    .feature-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .feature-card h3,
-    .plan-card h3 {
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-card h3 {
       margin-top: 0;
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       color: #fff;
     }
-    .feature-card p,
-    .plan-card p {
-      margin: 14px 0 0;
-      line-height: 1.7;
-      color: #d1d5db;
+
+    .feature-card p {
+      margin: 12px 0 0;
+      line-height: 1.6;
+      color: #cbd5e1;
+      font-size: 0.98rem;
     }
+
+    /* Grid de Planos */
     .plan-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
       margin-top: 24px;
+      align-items: stretch;
     }
+
     .plan-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-card);
+      border-radius: 24px;
+      padding: 36px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    .plan-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.6);
+    }
+
+    /* Destaque do plano avançado */
+    .plan-card.destaque {
+      border-color: var(--cor-primaria);
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.1);
+    }
+
+    .badge-destaque {
+      position: absolute;
+      top: -14px;
+      right: 28px;
+      background: var(--cor-primaria);
+      color: #0f172a;
+      padding: 4px 14px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .plan-card h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
     .price {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin: 18px 0;
-      color: #38bdf8;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin: 16px 0;
+      color: var(--cor-primaria);
+      display: flex;
+      align-items: baseline;
     }
+
     .price small {
-      font-size: 1rem;
-      color: #94a3b8;
+      font-size: 1.1rem;
+      color: var(--texto-mutado);
       font-weight: normal;
+      margin-left: 4px;
     }
+
+    .plan-card p {
+      margin: 0 0 24px 0;
+      line-height: 1.6;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    /* Lista Customizada UI/UX (Adeus Emojis colados) */
     .plan-card ul {
       list-style: none;
       padding: 0;
-      margin: 20px 0;
-      color: #cbd5e1;
+      margin: 0 0 32px 0;
     }
+
     .plan-card ul li {
-      margin: 12px 0;
+      margin: 14px 0;
       font-size: 0.95rem;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
+      color: #e2e8f0;
     }
+
+    .icon-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .icon-check {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+
+    .icon-x {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      opacity: 0.6;
+    }
+
+    .li-disabled {
+      opacity: 0.55;
+    }
+
+    /* Botões Modernos com microinterações */
     .button {
-      display: inline-block;
-      padding: 14px 26px;
-      border-radius: 999px;
+      display: block;
+      padding: 16px 32px;
+      border-radius: 14px;
       text-decoration: none;
       color: #0f172a;
-      background: #38bdf8;
+      background: var(--cor-primaria);
       font-weight: 700;
       text-align: center;
-      transition: background 0.2s;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+      cursor: pointer;
     }
+
     .button:hover {
-      background: #0ea5e9;
+      background: var(--cor-primaria-hover);
+      transform: scale(1.01);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
     }
+
+    .button:active {
+      transform: scale(0.99);
+    }
+
     .button-outline {
+      display: inline-block;
       background: transparent;
-      color: #38bdf8;
-      border: 2px solid #38bdf8;
+      color: var(--cor-primaria);
+      border: 2px solid var(--cor-primaria);
+      box-shadow: none;
     }
+
     .button-outline:hover {
-      background: rgba(56, 189, 248, 0.1);
+      background: rgba(56, 189, 248, 0.08);
+      border-color: var(--cor-primaria-hover);
+      color: #fff;
     }
+
+    /* Seção Contato */
+    .contato-section {
+      margin-top: 40px;
+    }
+    
+    .contato-card {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.3) 100%);
+    }
+
+    .contato-card .button {
+      display: inline-block;
+      margin-top: 20px;
+    }
+
     footer {
       text-align: center;
-      padding: 40px 24px;
-      color: #94a3b8;
-      font-size: 0.95rem;
-      border-top: 1px solid rgba(148, 163, 184, 0.1);
+      padding: 50px 24px;
+      color: var(--texto-mutado);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-card);
     }
+
     @media (max-width: 768px) {
-      header h1 { font-size: 2rem; }
+      header { padding: 50px 20px 30px; }
+      header h1 { font-size: 2.1rem; }
+      .plan-grid { gap: 20px; }
+      .plan-card { padding: 28px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
+  <div class="bg-glow"></div>
+
+  <header class="reveal">
     <div class="logo-container">
       <img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema">
     </div>
     <h1>Sistemas para Vendas e Gestão</h1>
     <p>Transforme seu negócio com uma solução de gestão completa, desenvolvida para simplificar processos, automatizar vendas e entregar resultados reais.</p>
-    <a class="button button-outline" href="#" onclick="rotaApp(event)">Área do Assinante</a>
+    <a class="button button-outline" href="https://4shellsistemas.verapp.com.br/">Área do Assinante</a>
   </header>
 
-  <section class="container">
+  <section class="container reveal">
     <div class="features">
       <div class="feature-card">
         <h3>Automação de Vendas</h3>
@@ -161,62 +364,61 @@
       </div>
       <div class="feature-card">
         <h3>Suporte e Implantação</h3>
-        <p>Sistema em nuvem com instalação rápida e suporte dedicado para que sua empresa comece a operar imediatamente com confiança.</p>
+        <p>Sistema em nuvem com instalação rápida e suporte dedicado para que sua empresa comece a operar imediatamente.</p>
       </div>
     </div>
   </section>
 
-  <section class="container">
+  <section class="container reveal">
     <h2>Planos 4Shell</h2>
-    <p>Escolha o plano mais adequado ao tamanho e necessidade do seu negócio.</p>
+    <p class="subtitle-section">Escolha o plano mais adequado ao tamanho e necessidade do seu negócio.</p>
     
     <div class="plan-grid">
-      <!-- PLANO ESSENCIAL -->
       <div class="plan-card">
         <div>
           <h3>Gestão Essencial</h3>
           <div class="price">R$ 200<small>/mês</small></div>
           <p>Ideal para a operação do dia a dia, controle de vendas, prestação de serviços e fluxo de caixa.</p>
           <ul>
-            <li>✅ Cadastros Estruturais (Básicos)</li>
-            <li>✅ Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
-            <li>✅ PDV Frente de Caixa</li>
-            <li>✅ Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
-            <li>✅ Fluxo de Caixa (Financeiro Básico)</li>
-            <li>❌ Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
-            <li>❌ Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
-            <li>❌ Controladoria e Finanças (Financeiro Av.)</li>
-            <li>❌ Auditoria e Logs de Segurança</li>
+            <li><span class="icon-status icon-check">✓</span> Cadastros Estruturais (Básicos)</li>
+            <li><span class="icon-status icon-check">✓</span> Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
+            <li><span class="icon-status icon-check">✓</span> PDV Frente de Caixa</li>
+            <li><span class="icon-status icon-check">✓</span> Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
+            <li><span class="icon-status icon-check">✓</span> Fluxo de Caixa (Financeiro Básico)</li>
+            <li class="li-disabled"><span class="icon-status icon-x">✕</span> Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
+            <li class="li-disabled"><span class="icon-status icon-x">✕</span> Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
+            <li class="li-disabled"><span class="icon-status icon-x">✕</span> Controladoria e Finanças (Financeiro Av.)</li>
+            <li class="li-disabled"><span class="icon-status icon-x">✕</span> Auditoria e Logs de Segurança</li>
           </ul>
         </div>
-        <a class="button" href="https://wa.me/5562960002191?text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Gestão%20Essencial%20do%204Shell.">Quero o Plano Essencial</a>
+        <a class="button" href="https://wa.me/5562960002191?text=Ol%C3%A1!%20Gostaria%20de%20assinar%20o%20Plano%20Gest%C3%A3o%20Essencial%20do%204Shell.">Quero o Plano Essencial</a>
       </div>
 
-      <!-- PLANO AVANÇADO -->
-      <div class="plan-card" style="border-color: #38bdf8;">
+      <div class="plan-card destaque">
+        <div class="badge-destaque">Mais Vendido</div>
         <div>
           <h3>Gestão Avançada</h3>
           <div class="price">R$ 280<small>/mês</small></div>
           <p>Para empresas que buscam automação fiscal, inteligência de compras e total segurança de auditoria.</p>
           <ul>
-            <li>✅ Cadastros Estruturais (Básicos)</li>
-            <li>✅ Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
-            <li>✅ PDV Frente de Caixa</li>
-            <li>✅ Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
-            <li>✅ Fluxo de Caixa (Financeiro Básico)</li>
-            <li>✅ Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
-            <li>✅ Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
-            <li>✅ Controladoria e Finanças (Financeiro Avançado)</li>
-            <li>✅ Auditoria e Logs de Segurança (Vendas, Finanças e Prod.)</li>
+            <li><span class="icon-status icon-check">✓</span> Cadastros Estruturais (Básicos)</li>
+            <li><span class="icon-status icon-check">✓</span> Comercial e Serviços (Pedidos, Orçamentos e O.S.)</li>
+            <li><span class="icon-status icon-check">✓</span> PDV Frente de Caixa</li>
+            <li><span class="icon-status icon-check">✓</span> Gestão de Estoque (Produtos, Serviços e Movimentações)</li>
+            <li><span class="icon-status icon-check">✓</span> Fluxo de Caixa (Financeiro Básico)</li>
+            <li><span class="icon-status icon-check">✓</span> Faturamento Fiscal (Nota Fiscal Eletrônica)</li>
+            <li><span class="icon-status icon-check">✓</span> Inteligência em Compras (Notas de Entrada, Cotações e O.C.)</li>
+            <li><span class="icon-status icon-check">✓</span> Controladoria e Finanças (Financeiro Avançado)</li>
+            <li><span class="icon-status icon-check">✓</span> Auditoria e Logs de Segurança (Vendas, Finanças)</li>
           </ul>
         </div>
-        <a class="button" href="https://wa.me/5562960002191?text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Gestão%20Avançada%20do%204Shell." style="background: #38bdf8;">Quero o Plano Avançado</a>
+        <a class="button" href="https://wa.me/5562960002191?text=Ol%C3%A1!%20Gostaria%20de%20assinar%20o%20Plano%20Gest%C3%A3o%20Avan%C3%A7ada%20do%204Shell.">Quero o Plano Avançado</a>
       </div>
     </div>
   </section>
 
-  <section class="container" id="contato">
-    <div class="feature-card">
+  <section class="container contato-section reveal" id="contato">
+    <div class="feature-card contato-card">
       <h3>Fale com a equipe 4Shell</h3>
       <p>Entre em contato e descubra como podemos personalizar o sistema para o seu negócio. Faça uma demonstração gratuita e veja como é fácil acelerar suas vendas.</p>
       <a class="button" href="mailto:elaboreag@hotmail.com">Fale conosco</a>
@@ -224,15 +426,29 @@
   </section>
 
   <footer>
-    <p>4Shell - Soluções em Sistemas de Gestão | Todos os direitos reservados.</p>
+    <p>&copy; 2026 4Shell - Soluções em Sistemas de Gestão | Todos os direitos reservados.</p>
   </footer>
 
   <script>
-    function rotaApp(event) {
-      event.preventDefault(); 
-      const urlExterna = "https://4shellsistemas.verapp.com.br/";
-      window.location.href = urlExterna;
-    }
+    // Efeito JavaScript para revelar elementos ao rolar a página (Scroll Reveal)
+    document.addEventListener("DOMContentLoaded", () => {
+      const elementsToReveal = document.querySelectorAll(".reveal");
+      
+      const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target); // Executa a animação apenas uma vez
+          }
+        });
+      }, {
+        threshold: 0.15 // Dispara quando 15% do elemento estiver visível
+      });
+
+      elementsToReveal.forEach(element => {
+        revealOnScroll.observe(element);
+      });
+    });
   </script>
 </body>
 </html>
