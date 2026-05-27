@@ -67,7 +67,11 @@
       font-weight: 800;
       letter-spacing: -0.025em;
       background: linear-gradient(to right, #fff, #94a3b8);
+      
+      /* Adicione esta linha para compatibilidade padrão e sumir o erro: */
+      background-clip: text; 
       -webkit-background-clip: text;
+      
       -webkit-text-fill-color: transparent;
     }
 
@@ -347,7 +351,7 @@
     <div class="logo-container">
       <img src="img/logo.png" alt="Logo do Sistema" class="logo-sistema">
     </div>
-    <h1>Sistemas para Vendas e Gestão</h1>
+    <h1>SISTEMA PARA VENDAS E GESTÃO</h1>
     <p>Transforme seu negócio com uma solução de gestão completa, desenvolvida para simplificar processos, automatizar vendas e entregar resultados reais.</p>
     <a class="button button-outline" href="https://4shellsistemas.verapp.com.br/">Área do Assinante</a>
   </header>
