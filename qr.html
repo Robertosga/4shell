@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gerador de QR Code — Download Temporário</title>
+  <style>
+    :root{--bg1:#0f2027;--bg2:#203a43;--card:#ffffff;--accent:#ff7b54;--accent-hover:#ff6b3f;--muted:#7a8a93;--text-dark:#0b1a1f}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;color:var(--text-dark);display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{width:100%;max-width:880px;background:linear-gradient(180deg,rgba(255,255,255,0.98),#ffffff);border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.35);padding:28px;display:grid;grid-template-columns:1fr 340px;gap:20px}
+    h1{margin:0 0 6px;font-size:20px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    .controls{display:flex;flex-direction:column;gap:12px}
+    label{font-size:13px;color:#263238}
+    input[type=text],select{padding:10px 12px;border-radius:10px;border:1px solid #e6eef2;font-size:14px}
+    .row{display:flex;gap:8px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(255,123,84,0.25);transition:background 0.2s ease,transform 0.2s ease}
+    .btn:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .btn.ghost{background:transparent;color:var(--accent);box-shadow:none;border:1px solid rgba(15,32,39,0.06)}
+    .preview{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#f7fbfc,#f0f6f8);min-height:260px;justify-content:center}
+    #qr{display:flex;align-items:center;justify-content:center}
+    .small{font-size:13px;color:var(--muted)}
+    .muted{color:var(--muted)}
+    .controls .options{display:flex;gap:8px}
+    .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+    .top-bar .logo-sistema{max-height:48px;width:auto;filter:drop-shadow(0 0 20px rgba(56, 189, 248, 0.2));transition:transform 0.3s ease}
+    .top-bar .logo-sistema:hover{transform:scale(1.03)}
+    .top-bar .back-link{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:rgba(15,32,39,0.05);color:var(--text-dark);text-decoration:none;font-weight:700;transition:background 0.2s ease}
+    .top-bar .back-link:hover{background:rgba(15,32,39,0.12)}
+    @media(max-width:880px){.card{grid-template-columns:1fr;max-width:760px}} 
+    .logo{display:inline-flex;align-items:center;gap:8px}
+    .logo .mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#ff8a65,#ff7b54);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .fade-in{animation:fadeIn .36s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <div class="card fade-in" role="main">
+    <div>
+      <div class="top-bar">
+        <img src="img/logo.png" alt="Logo 4Shell" class="logo-sistema" />
+        <a href="index.html" class="back-link">← Voltar</a>
+      </div>
+      <div>
+        <div class="logo"><span class="mark">QR</span><div><h1>Gerador de QR Code</h1><div class="small muted">Gera, baixa e remove o arquivo temporário automaticamente</div></div></div>
+      </div>
+
+      <p class="lead">Digite o texto ou URL que será codificado no QR.</p>
+
+      <div class="controls" aria-live="polite">
+        <div>
+          <label for="inputText">Texto / URL</label>
+          <input id="inputText" type="text" placeholder="https://exemplo.com / texto livre" autocomplete="off" />
+        </div>
+
+        <div class="row">
+          <div style="flex:1">
+            <label for="size">Tamanho (px)</label>
+            <select id="size" aria-label="Tamanho do QR">
+              <option>200</option>
+              <option selected>300</option>
+              <option>400</option>
+              <option>600</option>
+            </select>
+          </div>
+          <div style="width:120px">
+            <label for="fg">Cor</label>
+            <input id="fg" type="color" value="#0b1a1f" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:6px">
+          <button id="btnGenerate" class="btn">Gerar QR</button>
+          <button id="btnClear" class="btn ghost">Limpar</button>
+        </div>
+
+        <div class="foot">
+          <div class="small muted">Download via memória temporária (Blob URL)</div>
+          <div id="status" class="small muted">Pronto</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div id="qr" aria-hidden="false"></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="btnDownload" class="btn" disabled>Baixar PNG</button>
+        <button id="btnDownloadSvg" class="btn ghost" disabled>Baixar SVG</button>
+      </div>
+      <div id="note" class="small muted">A imagem será removida após o download.</div>
+    </div>
+  </div>
+
+  <script>
+  const elInput = document.getElementById('inputText');
+  const elSize = document.getElementById('size');
+  const elFg = document.getElementById('fg');
+  const elGenerate = document.getElementById('btnGenerate');
+  const elClear = document.getElementById('btnClear');
+  const elQr = document.getElementById('qr');
+  const elDownload = document.getElementById('btnDownload');
+  const elDownloadSvg = document.getElementById('btnDownloadSvg');
+  const elStatus = document.getElementById('status');
+
+  let currentBlobUrl = null;
+
+  function sanitizeFilename(name){return name.replace(/[^a-z0-9._-]/gi,'_').slice(0,120) || 'qr_code'}
+
+  function setStatus(t){elStatus.textContent = t}
+
+  function clearPreview(){elQr.innerHTML='';elDownload.disabled=true;elDownloadSvg.disabled=true;setStatus('Pronto')}
+
+  async function generateQR(text, size, color){
+    text = String(text);
+    elQr.innerHTML = '';
+    try{
+      const encoded = encodeURIComponent(text);
+      const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encoded}&color=${color.replace('#','')}`;
+      const img = document.createElement('img');
+      img.alt = 'QR code';
+      img.width = size; img.height = size; img.style.borderRadius='8px';
+      img.src = url;
+      elQr.appendChild(img);
+      setStatus('QR gerado');
+      elDownload.disabled = false;
+      elDownloadSvg.disabled = false;
+      return img;
+    }catch(e){
+      setStatus('Erro ao gerar');
+      throw e;
+    }
+  }
+
+  elGenerate.addEventListener('click', async ()=>{
+    const text = elInput.value.trim();
+    if(!text){setStatus('Digite um texto ou URL'); return}
+    setStatus('Gerando...');
+    clearExistingBlob();
+    try{
+      const size = parseInt(elSize.value,10)||300;
+      const color = elFg.value||'#0b1a1f';
+      await generateQR(text,size,color);
+    }catch(err){console.error(err);setStatus('Falha ao gerar');}
+  });
+
+  elClear.addEventListener('click', ()=>{elInput.value='';clearPreview();clearExistingBlob();});
+
+  function clearExistingBlob(){if(currentBlobUrl){URL.revokeObjectURL(currentBlobUrl);currentBlobUrl=null}}
+
+  async function downloadImage(asSvg=false){
+    const img = elQr.querySelector('img');
+    const canvas = elQr.querySelector('canvas');
+    let blob = null;
+    if(canvas){
+      blob = await new Promise(res=>canvas.toBlob(res,'image/png'));
+    }else if(img){
+      try{
+        const resp = await fetch(img.src, {mode:'cors'});
+        blob = await resp.blob();
+      }catch(e){
+        window.open(img.src, '_blank', 'noopener');
+        setStatus('Abertura em nova aba (sem permissão de download direto)');
+        return;
+      }
+    }else{setStatus('Nada para baixar');return}
+
+    if(!blob){setStatus('Erro ao preparar arquivo');return}
+
+    clearExistingBlob();
+    currentBlobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const filename = sanitizeFilename(elInput.value || 'qr_code') + '.png';
+    a.href = currentBlobUrl; a.download = filename; a.style.display='none'; document.body.appendChild(a);
+    a.click();
+    setStatus('Download iniciado — limpando arquivo temporário');
+    setTimeout(()=>{
+      try{URL.revokeObjectURL(currentBlobUrl)}catch(_){}
+      currentBlobUrl=null; a.remove(); clearPreview();
+      setStatus('Arquivo removido da memória temporária');
+    },1200);
+  }
+
+  elDownload.addEventListener('click', ()=>downloadImage(false));
+  elDownloadSvg.addEventListener('click', ()=>{
+    const img = elQr.querySelector('img');
+    if(!img){setStatus('Gere um QR primeiro');return}
+    try{
+      const src = img.src;
+      const svgUrl = src.replace('/create-qr-code/','/create-qr-code/').replace(/size=\d+x\d+/,'size='+(elSize.value||300)+'x'+(elSize.value||300))+'&format=svg';
+      window.open(svgUrl,'_blank','noopener');
+      setStatus('Abrindo SVG em nova aba');
+    }catch(e){setStatus('Não foi possível gerar SVG');}
+  });
+
+  elInput.addEventListener('keydown', (e)=>{if(e.key==='Enter'){elGenerate.click();e.preventDefault()}});
+
+  clearPreview();
+  </script>
+</body>
+</html>
