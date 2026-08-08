@@ -326,6 +326,32 @@
       color: #fff;
     }
 
+    .header-actions {
+      display: inline-flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .header-actions .separator {
+      color: var(--texto-mutado);
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .header-actions .link-secondary {
+      color: var(--cor-primaria);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+
+    .header-actions .link-secondary:hover {
+      color: var(--cor-primaria-hover);
+    }
+
     /* Seção Contato */
     .contato-section {
       margin-top: 40px;
@@ -367,7 +393,11 @@
     </div>
     <h1>SISTEMA PARA VENDAS E GESTÃO</h1>
     <p>Transforme seu negócio com uma solução de gestão completa, desenvolvida para simplificar processos, automatizar vendas e entregar resultados reais.</p>
-    <a class="button button-outline" href="https://4shellsistemas.verapp.com.br/">Área do Assinante</a>
+    <div class="header-actions">
+      <a class="button button-outline" href="https://4shellsistemas.verapp.com.br/">Área do Assinante</a>
+      <span class="separator">=</span>
+      <a class="link-secondary" href="qr.html">Gerador de QR Code</a>
+    </div>
   </header>
 
   <section class="container reveal">
